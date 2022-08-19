@@ -11,6 +11,7 @@ function App() {
     character: '',
   });
   const [searchQuote, setSearchQuote] = useState('');
+  const [searchCharacter, setSearchCharacter] = useState('all');
 
   //Evento para filtrar por frase
 
@@ -20,11 +21,25 @@ function App() {
 
   //Evento para filtrar por personaje
 
+  const handleSearchCharacter = (ev) => {
+    setSearchCharacter(ev.target.value);
+  };
+
   //Pintar las frases y filtrar
 
   const htmlData = data
     .filter((quoteItem) => {
       return quoteItem.quote.toLowerCase().includes(searchQuote.toLowerCase());
+    })
+
+    .filter((quoteItem) => {
+      if (searchCharacter === 'all') {
+        return true;
+      } else if (quoteItem.character === searchCharacter) {
+        return true;
+      } else {
+        return false;
+      }
     })
 
     .map((quoteItem, index) => {
@@ -75,7 +90,12 @@ function App() {
               onChange={handleSearchQuote}
             />
             <label htmlFor="filterCharacter"> Filtrar por personaje </label>
-            <select name="filterCharacter" id="filterCharacter">
+            <select
+              name="filterCharacter"
+              id="filterCharacter"
+              value={searchCharacter}
+              onChange={handleSearchCharacter}
+            >
               <option value="all">Todos</option>
               <option value="Ross">Ross</option>
               <option value="Monica">Monica</option>
