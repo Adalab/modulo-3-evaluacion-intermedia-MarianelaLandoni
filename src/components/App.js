@@ -10,6 +10,7 @@ function App() {
     quote: '',
     character: '',
   });
+  const [searchQuote, setSearchQuote] = useState('');
 
   //Pintar las frases
 
@@ -50,6 +51,33 @@ function App() {
         <h1>Frases de Friends</h1>
       </header>
       <main>
+        <section>
+          <form>
+            <label htmlFor="filterQuote"> Filtrar por frase </label>
+            <input
+              type="text"
+              name="filterQuote"
+              id="filterQuote"
+              // value={}
+              // onChange={}
+            />
+            <label htmlFor="filterCharacter"> Filtrar por personaje </label>
+            <select
+              name="filterCharacter"
+              id="filterCharacter"
+              // value={}
+              // onChange={}
+            >
+              <option value="all">Todos</option>
+              <option value="Ross">Ross</option>
+              <option value="Monica">Monica</option>
+              <option value="Joey">Joey</option>
+              <option value="Phoebe">Phoebe</option>
+              <option value="Chandler">Chandler</option>
+              <option value="Rachel">Rachel</option>
+            </select>
+          </form>
+        </section>
         <section>
           <ul className="listQuotes">{htmlData}</ul>
         </section>
