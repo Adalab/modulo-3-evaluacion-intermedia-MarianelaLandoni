@@ -12,15 +12,28 @@ function App() {
   });
   const [searchQuote, setSearchQuote] = useState('');
 
-  //Pintar las frases
+  //Evento para filtrar por frase
 
-  const htmlData = data.map((quoteItem, index) => {
-    return (
-      <li key={index}>
-        {quoteItem.quote} - <span>{quoteItem.character}</span>
-      </li>
-    );
-  });
+  const handleSearchQuote = (ev) => {
+    setSearchQuote(ev.target.value);
+  };
+
+  //Evento para filtrar por personaje
+
+  //Pintar las frases y filtrar
+
+  const htmlData = data
+    .filter((quoteItem) => {
+      return quoteItem.quote.toLowerCase().includes(searchQuote.toLowerCase());
+    })
+
+    .map((quoteItem, index) => {
+      return (
+        <li key={index}>
+          {quoteItem.quote} - <span>{quoteItem.character}</span>
+        </li>
+      );
+    });
 
   //Añadir nueva frase
   //Función manejadora de los inputs
@@ -58,16 +71,11 @@ function App() {
               type="text"
               name="filterQuote"
               id="filterQuote"
-              // value={}
-              // onChange={}
+              value={searchQuote}
+              onChange={handleSearchQuote}
             />
             <label htmlFor="filterCharacter"> Filtrar por personaje </label>
-            <select
-              name="filterCharacter"
-              id="filterCharacter"
-              // value={}
-              // onChange={}
-            >
+            <select name="filterCharacter" id="filterCharacter">
               <option value="all">Todos</option>
               <option value="Ross">Ross</option>
               <option value="Monica">Monica</option>
@@ -89,6 +97,7 @@ function App() {
               type="name"
               name="quote"
               id="quote"
+              placeholder="Ej: Mi poo poo"
               value={newQuote.quote}
               onChange={handleNewQuote}
             />
@@ -98,6 +107,7 @@ function App() {
               type="name"
               name="character"
               id="character"
+              placeholder="Ej: Joey"
               value={newQuote.character}
               onChange={handleNewQuote}
             />
