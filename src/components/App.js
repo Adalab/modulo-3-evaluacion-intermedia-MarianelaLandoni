@@ -1,6 +1,22 @@
 import '../styles/App.scss';
+import friendsQuotes from '../data/friends_quotes.json';
+import { useState } from 'react';
 
 function App() {
+  //Variables de estado
+
+  const [data, setData] = useState(friendsQuotes);
+
+  //Pintar las frases
+
+  const htmlData = data.map((quoteItem, index) => {
+    return (
+      <li>
+        {quoteItem.quote} - <span>{quoteItem.character}</span>
+      </li>
+    );
+  });
+
   return (
     <div className="App">
       <header>
@@ -8,17 +24,7 @@ function App() {
       </header>
       <main>
         <section>
-          <ul>
-            <li>
-              Frase 1 - <span>Personaje</span>
-            </li>
-            <li>
-              Frase 2 - <span>Personaje</span>
-            </li>
-            <li>
-              Frase 3 - <span>Personaje</span>
-            </li>
-          </ul>
+          <ul>{htmlData}</ul>
         </section>
         <section>
           <h2>Añadir una nueva frase</h2>
