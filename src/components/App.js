@@ -36,6 +36,12 @@ function App() {
   const handleClickAddQuote = (ev) => {
     ev.preventDefault();
     setData([...data, newQuote]);
+
+    // Quiero que se borren los inputs cuando ya se ha añadido la frase
+    setNewQuote({
+      quote: '',
+      character: '',
+    });
   };
 
   return (
