@@ -6,16 +6,37 @@ function App() {
   //Variables de estado
 
   const [data, setData] = useState(friendsQuotes);
+  const [newQuote, setNewQuote] = useState({
+    quote: '',
+    character: '',
+  });
 
   //Pintar las frases
 
   const htmlData = data.map((quoteItem, index) => {
     return (
-      <li>
+      <li key={index}>
         {quoteItem.quote} - <span>{quoteItem.character}</span>
       </li>
     );
   });
+
+  //Añadir nueva frase
+  //Función manejadora de los inputs
+
+  const handleNewQuote = (ev) => {
+    setNewQuote({
+      ...newQuote,
+      [ev.target.id]: ev.target.value,
+    });
+  };
+
+  //Función manejadora del botón de añadir. A los datos que ya tenía..., le añado estos nuevos (spread)
+
+  const handleClickAddQuote = (ev) => {
+    ev.preventDefault();
+    setData([...data, newQuote]);
+  };
 
   return (
     <div className="App">
@@ -24,16 +45,33 @@ function App() {
       </header>
       <main>
         <section>
-          <ul>{htmlData}</ul>
+          <ul className="listQuotes">{htmlData}</ul>
         </section>
         <section>
           <h2>Añadir una nueva frase</h2>
           <form className="form">
-            <label htmlFor="quote"> Frase </label>
-            <input type="name" name="quote" id="quote" />
-            <label htmlFor="character"> Personaje </label>
-            <input type="name" name="character" id="character" />
-            <input type="submit" value="Añadir nueva frase" />
+            <label htmlFor="quote">Frase</label>
+            <input
+              type="name"
+              name="quote"
+              id="quote"
+              value={newQuote.quote}
+              onChange={handleNewQuote}
+            />
+
+            <label htmlFor="character">Personaje</label>
+            <input
+              type="name"
+              name="character"
+              id="character"
+              value={newQuote.character}
+              onChange={handleNewQuote}
+            />
+            <input
+              type="submit"
+              value="Añadir nueva frase"
+              onClick={handleClickAddQuote}
+            />
           </form>
         </section>
       </main>
