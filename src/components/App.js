@@ -1,17 +1,26 @@
 import '../styles/App.scss';
-import friendsQuotes from '../data/friends_quotes.json';
-import { useState } from 'react';
+// import friendsQuotes from '../data/friends_quotes.json';
+import { useState, useEffect } from 'react';
+import getDataApi from '../services/friendsAPI';
 
 function App() {
   //Variables de estado
 
-  const [data, setData] = useState(friendsQuotes);
+  const [data, setData] = useState([]);
   const [newQuote, setNewQuote] = useState({
     quote: '',
     character: '',
   });
   const [searchQuote, setSearchQuote] = useState('');
   const [searchCharacter, setSearchCharacter] = useState('all');
+  const [fillText, setFillText] = useState('');
+
+  //API
+  useEffect(() => {
+    getDataApi().then((data) => {
+      setData(data);
+    });
+  }, []);
 
   //Evento para filtrar por frase
 
@@ -64,7 +73,12 @@ function App() {
 
   const handleClickAddQuote = (ev) => {
     ev.preventDefault();
-    setData([...data, newQuote]);
+    if (newQuote.quote === '' || newQuote.character === '') {
+      setFillText('Tienes que rellenar todos los campos');
+    } else {
+      setFillText('');
+      setData([...data, newQuote]);
+    }
 
     // Quiero que se borren los inputs cuando ya se ha añadido la frase
     setNewQuote({
@@ -111,6 +125,7 @@ function App() {
         </section>
         <section>
           <h2>Añadir una nueva frase</h2>
+          <p>{fillText}</p>
           <form className="form">
             <label htmlFor="quote">Frase</label>
             <input
